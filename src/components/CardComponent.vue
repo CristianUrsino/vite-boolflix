@@ -4,11 +4,13 @@
         <h4>{{originalTitle}}</h4>
         <h4>{{originalLinguage}}</h4>
         <h4>{{voteAverage}}</h4>
+        <img :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
     </div>
     
 </template>
 
 <script>
+import axios from 'axios';
     export default{
         name:'CardComponent',
         props:{
@@ -17,6 +19,35 @@
             originalLinguage:String,
             voteAverage:Number,
         },
+        data(){
+            return{
+                currentFlag:'',
+            }
+        },
+        computed:{
+            currentFlagCalc() {
+                let initials = this.originalLinguage.toUpperCase();
+                switch (initials) {
+                    case 'EN':
+                        initials = 'GB';
+                        break;
+                    case 'JA':
+                        initials = 'JP';
+                        break;
+                    case 'KO':
+                        initials = 'KM';
+                        break;
+                }
+
+                try {
+                    this.currentFlag = 'https://flagsapi.com/' + initials + '/shiny/64.png';
+                } catch (error) {
+                    this.currentFlag = 'https://flagsapi.com/BE/shiny/64.png';
+                }
+
+                return this.currentFlag;
+            }
+        }
     }
 </script>
 

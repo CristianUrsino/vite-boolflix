@@ -5,7 +5,7 @@
       <div class="container py-3 px-1 d-flex justify-content-between align-items-center">
         <h1>BOOLFLIX</h1>
         <SearchComponent 
-        @filter-movies-films="setQuery"
+        @filter-movies-films="setParams"
         />
       </div>
     </header>
@@ -14,7 +14,7 @@
       <div class="container">
         <h3 v-if="store.moviesList.length === 0 && store.seriesList.length === 0">Cercare i film/serie tv</h3>
       </div>
-
+      <!-- cards per i film -->
       <div class="container row mx-auto gy-2 debug mb-5 pb-5">
         <div class="col-2" v-for="movies in this.store.moviesList" :key="movies.id">
           <CardComponent
@@ -24,6 +24,7 @@
             :voteAverage="movies.vote_average"
           />
         </div>
+        <!-- cards per le serie -->
         <div class="col-2" v-for="series in this.store.seriesList" :key="series.id">
           <CardComponent
             :title="series.name"
@@ -62,27 +63,14 @@
 
     methods:{
       /**
-       * [setQuery]
-       * Prende la nuova query dal componente SearchComponent attraverso $emit, richiama il set delle liste dei parametri e richiama il getMovies e getSeries 
-       * @param {String} newQuery
-       * @returns {Void}
-       * !!!!!!!DIVIDERE IN 2 FUNZIONI O CAMBIARE NOME!!!!!!!!!
-       */
-      setQuery(newQuery){
-        console.log('App ok-' + newQuery);
-        this.setParams(newQuery);
-        console.group('get movies/series');
-        this.getMovies();
-        this.getSeries();
-      },
-
-      /**
        * [setParams]
-       * Presa la nuova query setta i parametri delle liste di parametri
+       * Presa la nuova query setta i parametri delle liste di parametri e richiama le funzioni chiamati delle API
        * @param {String} newQuery
        * @returns {Void}
        */
       setParams(newQuery){
+        console.log('App ok-' + newQuery);
+        //setta i parametri
         this.paramsMovies={
           api_key:this.store.api_key,
           num:20,
@@ -97,6 +85,10 @@
         }
         console.log('films query= '+ this.paramsMovies.query + " --- "+ 'series query= '+ this.paramsSeries.query);
         console.groupEnd();//DI Passaggio new query
+        //richiama le funzioni delle API
+        console.group('get movies/series');
+        this.getMovies();
+        this.getSeries();
       },
 
       /**
@@ -132,8 +124,11 @@
         axios.get(seriesUrl, {params: this.paramsSeries}).then((res)=>{          
           this.store.seriesList=res.data.results;
           console.log(this.store.seriesList);
+        }).finally(()=>{
+          setTimeout(()=>{
+            console.groupEnd();//DI get movies/series
+          },300);
         });
-        console.groupEnd();//DI get movies/series
       }
 
     },
