@@ -38,10 +38,10 @@ import axios from 'axios';
                         initials = 'KM';
                         break;
                 }
-                if (!['GB', 'JP', 'KM', 'IT', 'FR'].includes(initials)) {  // lingue supportate, NOTA IL NOT
+                if (!['GB', 'JP', 'KM', 'IT', 'FR'].includes(initials)) { 
                     initials = 'GB';
                 }
-                return 'https://flagsapi.com/' + initials + '/shiny/64.png';
+                return 'https://flagsapi.com/' + initials + '/shiny/32.png';
             }
         }
     }
