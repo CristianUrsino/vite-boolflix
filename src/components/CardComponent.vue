@@ -4,7 +4,7 @@
         <h4>{{originalTitle}}</h4>
         <h4>{{originalLinguage}}</h4>
         <h4>{{voteAverage}}</h4>
-        <img :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
+        <img :src="currentFlag"  @error="fakeFlag()">
     </div>
     
 </template>
@@ -24,6 +24,11 @@ import axios from 'axios';
                 currentFlag:'',
             }
         },
+        methods:{
+            fakeFlag(){
+                this.currentFlag='https://flagsapi.com/GB/shiny/64.png';
+            }
+        },
         computed:{
             currentFlagCalc() {
                 let initials = this.originalLinguage.toUpperCase();
@@ -39,13 +44,7 @@ import axios from 'axios';
                         break;
                 }
 
-                try {
-                    this.currentFlag = 'https://flagsapi.com/' + initials + '/shiny/64.png';
-                } catch (error) {
-                    this.currentFlag = 'https://flagsapi.com/BE/shiny/64.png';
-                }
-
-                return this.currentFlag;
+                this.currentFlag = 'https://flagsapi.com/' + initials + '/shiny/64.png';
             }
         }
     }
