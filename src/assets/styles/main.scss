@@ -16,8 +16,15 @@ $fa-font-path: '../webfonts';
     color: white;
 }
 //UTILITYS
+.debug{
+    border: 1px solid white;
+}
 .text-black{
     color: $colorBlack;
+}
+.my-card{
+    background-color: $colorRed;
+    height: 100%;
 }
 //STRUCTURE
 .wrapper{
