@@ -1,3 +1,4 @@
+@use './parcials/variable' as *;
 @import 'bootstrap/scss/bootstrap';
 
 $fa-font-path: '../webfonts';
@@ -5,3 +6,31 @@ $fa-font-path: '../webfonts';
 @import '@fortawesome/fontawesome-free/scss/solid.scss';
 @import '@fortawesome/fontawesome-free/scss/regular.scss';
 @import '@fortawesome/fontawesome-free/scss/brands.scss';
+
+//GENERAL
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    color: white;
+}
+//UTILITYS
+.text-black{
+    color: $colorBlack;
+}
+//STRUCTURE
+.wrapper{
+    height: 100vh;
+    overflow: hidden;
+}
+header{
+    background-color: $colorBlack;
+    h1{
+        color: $colorRed;
+    }
+}
+main{
+    height: 100%;
+    background-color: $colorPrimary;
+}
