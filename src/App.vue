@@ -11,11 +11,16 @@
     </header>
 
     <main class="container-fluid overflow-y-auto py-3 px-1">
+      <!-- prima di cercare -->
       <div class="container">
         <h3 v-if="store.moviesList.length === 0 && store.seriesList.length === 0">Cercare i film/serie tv</h3>
       </div>
+      <!-- messaggio di errore -->
+      <div class="container">
+        <div v-if="store.error != ''" class="alert alert-danger">{{store.error}}</div>
+      </div>
       <!-- cards per i film -->
-      <div class="container row mx-auto gy-2 debug mb-5 pb-5">
+      <div class="container row mx-auto gy-2 mb-5 pb-5">
         <div class="col-2" v-for="movies in this.store.moviesList" :key="movies.id">
           <CardComponent
             :title="movies.title"
@@ -97,13 +102,15 @@
        * [getMovies]
        * richiama l'API per ottenere la lista di oggetti (movies)
        * @returns {Void}
+       * !!!!!!!TROPPO RIDONDANTE!!!!!!!!!!
        */
       getMovies(){
         const moviesUrl = this.store.apiUrl + this.store.endPoint.movies;
         if(this.paramsMovies.query === ''){
-          console.log("LA QUERY E' VUOTA" );
+          this.store.error='Inserire caratteri validi';
           return;
         }
+        this.store.error='';
         axios.get(moviesUrl, {params: this.paramsMovies}).then((res)=>{
           this.store.moviesList=res.data.results;
           console.log(this.store.moviesList);
@@ -120,7 +127,6 @@
       getSeries(){
         const seriesUrl = this.store.apiUrl + this.store.endPoint.series;
         if(this.paramsSeries.query === ''){
-          console.log("LA QUERY E' VUOTA" );
           return;
         }
         axios.get(seriesUrl, {params: this.paramsSeries}).then((res)=>{          

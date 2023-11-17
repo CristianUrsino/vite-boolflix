@@ -1,10 +1,10 @@
 <template>
-    <div class="my-card debug" @mouseover="showInfo = true" @mouseout="showInfo = false">
-
+    <div class="my-card " @mouseover="showInfo = true" @mouseout="showInfo = false">
+        <!-- parte avanti -->
         <div v-if="!showInfo">
             <img :src="'https://image.tmdb.org/t/p/w342' + imgFrontPath" :alt="originalTitle + 'immagine'">
         </div>
-
+        <!-- parte dietro -->
         <div v-else >
             <div>{{title}}</div>
             <div>{{originalTitle}}</div>
