@@ -4,13 +4,12 @@
         <h4>{{originalTitle}}</h4>
         <h4>{{originalLinguage}}</h4>
         <h4>{{voteAverage}}</h4>
-        <img :src="currentFlagCalc"  @error="fakeFlag()">
+        <img :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
     </div>
     
 </template>
 
 <script>
-import axios from 'axios';
     export default{
         name:'CardComponent',
         props:{
@@ -25,6 +24,12 @@ import axios from 'axios';
             }
         },
         computed:{
+            /**
+             * [currentFlagCalcl]
+             * Converte le iniziali delle lingue più comuni nel formato supportato dall'API (flagsapi), poi le confronta con quelle utilizzabili e se diverse le converte in 'inglesi' e ritorna l'url completo
+             * @returns {String} url per richiamare l'epi (flagsapi)
+             * !!!!!!!!!!!CREARE ARRAY PER LE INIZIALI CONOSCIUTE!!!!!!!!!!!!
+             */
             currentFlagCalc() {
                 let initials = this.originalLinguage.toUpperCase();
                 switch (initials) {

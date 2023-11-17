@@ -15,6 +15,9 @@ $fa-font-path: '../webfonts';
     list-style-type: none;
     color: white;
 }
+img{
+    width: 100%;
+}
 //UTILITYS
 .debug{
     border: 1px solid white;
@@ -25,7 +28,11 @@ $fa-font-path: '../webfonts';
 .my-card{
     background-color: $colorRed;
     height: 100%;
+    img{
+        width: 30px;
+    }
 }
+
 //STRUCTURE
 .wrapper{
     height: 100vh;
