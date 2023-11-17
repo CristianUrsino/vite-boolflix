@@ -46,7 +46,7 @@
               :img-front-path="serie.poster_path"
               :id="serie.id"
               :cast="serie.cast"
-              @cast-ready="addCredits($event,seris)"
+              @cast-ready="addCredits($event,serie)"
             />
         </div>
       </div>
@@ -89,10 +89,10 @@
        * @param {Object} movies 
        * @return {Void}
        */
-      addCredits(cast,movies){
+      addCredits(cast,serieMovie){
         console.log(cast);
-        movies.cast = cast;
-        console.log(movies);
+        serieMovie.cast = cast;
+        console.log(serieMovie);
       },
 
       /**
