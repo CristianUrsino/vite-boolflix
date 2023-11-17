@@ -1,5 +1,5 @@
 <template>
-    <div class="my-card " @mouseover="showInfo = true" @mouseout="showInfo = false">
+    <div class="my-card " @mouseenter="getCredits()" @mouseleave="showInfo = false">
         <!-- parte avanti -->
         <div v-if="!showInfo">
             <img :src="'https://image.tmdb.org/t/p/w342' + imgFrontPath" :alt="originalTitle + 'immagine'">
@@ -14,6 +14,7 @@
                 <i v-else class="fa-regular fa-star fa-xs"></i>
             </span>
             <img class="flag" :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
+            <div v-for="actor in cast" :key="actor.id">{{ actor.name }}</div>
         </div>
 
     </div>
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {store} from '../data/store.js';
     export default{
         name:'CardComponent',
         props:{
@@ -29,14 +32,40 @@
             originalLinguage:String,
             voteAverage:Number,
             imgFrontPath:String,
+            id: Number,
+            cast:Array,
         },
         data(){
             return{
+                store,
                 currentFlag:'',
                 showInfo:false,
             }
         },
         methods:{
+            getCredits(){
+                this.showInfo = true;
+                if(this.cast && this.cast.length > 0){
+                    console.log('cast vuoto');
+                    return;
+                }
+                const endPoint = this.store.endPoint.movieCast + this.id + '/credits';
+                const params = {
+                    api_key : this.store.api_key
+                }
+                const cast = [];
+                axios.get(this.store.apiUrl + endPoint, {params}).then((res)=>{
+                    for(let i=0; i < 5 ; i++){
+                        if(res.data.cast[i]){
+                            cast.push(res.data.cast[i]);
+                        }
+                    }
+                }).catch((error)=>{
+                    console.log(error);
+                }).finally(()=>{
+                    this.$emit('castReady', cast);
+                })
+            },
         },
         computed:{
             /**
@@ -71,10 +100,12 @@
              */
             stars(){
                 let stars = Math.ceil(this.voteAverage / 2);
-                console.log(stars);
+                // console.log(stars);
                 return stars
             }
         },
+        created(){
+        }
     }
 </script>
 

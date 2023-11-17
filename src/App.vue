@@ -28,6 +28,9 @@
             :originalLinguage="movies.original_language"
             :voteAverage="movies.vote_average"
             :imgFrontPath="movies.poster_path"
+            :id="movies.id"
+            :cast="movies.cast"
+            @cast-ready="addCredits($event,movies)"
           />
         </div>
         <!-- cards per le serie -->
@@ -69,6 +72,13 @@
     },
 
     methods:{
+
+      addCredits(cast,movies){
+        console.log(cast);
+        movies.cast = cast
+        console.log(movies);
+      },
+
       /**
        * [setParams]
        * Presa la nuova query setta i parametri delle liste di parametri e richiama le funzioni chiamati delle API
