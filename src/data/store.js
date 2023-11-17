@@ -6,7 +6,8 @@ export const store = reactive({
         movies:'search/movie',
         series:'search/tv',
         movieCast: 'movie/',
-        genre: 'genre/movie',
+        tvCast:'tv/',
+        genre: 'genre/tv/list',
     },
     api_key: '9aa133434562a109367588268257ad2f',
     query:'',
@@ -14,4 +15,6 @@ export const store = reactive({
     loading:true,
     moviesList:[],
     seriesList: [],
+    genreList:[],
+    currentGenreId:'',
 });

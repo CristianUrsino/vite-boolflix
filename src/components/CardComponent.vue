@@ -1,5 +1,5 @@
 <template>
-    <div class="my-card " @mouseleave="showInfo = false">
+    <div class="my-card " @mouseleave="showInfo = false" >
         <!-- parte avanti -->
         <div v-if="!showInfo" @mouseenter="getCredits">
             <img :src="'https://image.tmdb.org/t/p/w342' + imgFrontPath" :alt="originalTitle + 'immagine'">
@@ -18,6 +18,7 @@
             <img class="flag" :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
             <!-- cast -->
             <div v-for="actor in cast" :key="actor.id">{{ actor.name }}</div>
+            
         </div>
 
     </div>
@@ -30,6 +31,7 @@ import {store} from '../data/store.js';
     export default{
         name:'CardComponent',
         props:{
+            isFilm:Boolean,
             title:String,
             originalTitle:String,
             originalLinguage:String,
@@ -61,7 +63,12 @@ import {store} from '../data/store.js';
                     return;
                 }
                 //richiama l'api riempie con i primi 5 l'array cast
-                const endPoint = this.store.endPoint.movieCast + this.id + '/credits';
+                let endPoint = '';
+                if (this.isFilm) {
+                    endPoint = this.store.endPoint.movieCast + this.id + '/credits';
+                }else{
+                    endPoint = this.store.endPoint.tvCast + this.id + '/aggregate_credits';
+                }
                 const params = {
                     api_key : this.store.api_key
                 }

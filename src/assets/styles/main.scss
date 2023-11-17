@@ -18,6 +18,12 @@ $fa-font-path: '../webfonts';
 img{
     width: 100%;
 }
+select{
+    color: $colorBlack;
+    >*{
+        color: $colorBlack;
+    }
+}
 //UTILITYS
 .debug{
     border: 1px solid white;

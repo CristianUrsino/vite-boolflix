@@ -4,7 +4,7 @@
     <header>
       <div class="container py-3 px-1 d-flex justify-content-between align-items-center">
         <h1>BOOLFLIX</h1>
-
+        <GenreSelect/>
         <SearchComponent 
         @filter-movies-films="setParams"
         />
@@ -22,8 +22,9 @@
       </div>
       <!-- cards per i film -->
       <div class="container row mx-auto gy-2 mb-5 pb-5">
-        <div class="col-3" v-for="movie in this.store.moviesList" :key="movie.id">
-          <CardComponent
+        <div class="col-3" v-for="movie in this.store.moviesList" :key="movie.id" v-show="movie.genre_ids.includes(store.currentGenreId) || store.currentGenreId === ''">
+            <CardComponent
+            :isFilm="true"
             :title="movie.title"
             :originalTitle="movie.original_title"
             :originalLinguage="movie.original_language"
@@ -32,21 +33,24 @@
             :id="movie.id"
             :cast="movie.cast"
             @cast-ready="addCredits($event,movie)"
-          />
+            />
         </div>
         <!-- cards per le serie -->
-        <div class="col-3" v-for="serie in this.store.seriesList" :key="serie.id">
-          <CardComponent
-            :title="serie.name"
-            :originalTitle="serie.original_name"
-            :originalLinguage="serie.original_language"
-            :voteAverage="serie.vote_average"
-            :img-front-path="serie.poster_path"
-            :cast="serie.cast"
-            @cast-ready="addCredits($event,seris)"
-          />
+        <div class="col-3" v-for="serie in this.store.seriesList" :key="serie.id" v-show="serie.genre_ids.includes(store.currentGenreId) || store.currentGenreId === ''">
+            <CardComponent
+              :isFilm="false"
+              :title="serie.name"
+              :originalTitle="serie.original_name"
+              :originalLinguage="serie.original_language"
+              :voteAverage="serie.vote_average"
+              :img-front-path="serie.poster_path"
+              :id="serie.id"
+              :cast="serie.cast"
+              @cast-ready="addCredits($event,seris)"
+            />
         </div>
       </div>
+
     </main>
 
   </div>
@@ -58,12 +62,14 @@
   import {store} from './data/store.js';
   import SearchComponent from './components/SearchComponent.vue';
   import CardComponent from './components/CardComponent.vue';
+  import GenreSelect from './components/GenreSelect.vue';
 
   export default{
     name: 'App',
     components:{
       SearchComponent,
       CardComponent,
+      GenreSelect,
     },
 
     data(){
@@ -157,12 +163,22 @@
             console.groupEnd();//DI get movies/series
           },300);
         });
-      }
+      },
+      
+      getGenre(){
+        const genreApi = this.store.apiUrl + this.store.endPoint.genre;
+        const params = {
+          api_key:this.store.api_key,
+        }
+        axios.get(genreApi, {params}).then((res)=>{
+          this.store.genreList = res.data.genres;
+          console.log(this.store.genreList);
+        })
+      },
 
     },
-
     created(){
-      
+      this.getGenre();
     }
   }
 </script>
