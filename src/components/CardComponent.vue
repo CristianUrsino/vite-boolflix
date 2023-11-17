@@ -1,7 +1,7 @@
 <template>
-    <div class="my-card " @mouseenter="getCredits()" @mouseleave="showInfo = false">
+    <div class="my-card " @mouseleave="showInfo = false">
         <!-- parte avanti -->
-        <div v-if="!showInfo">
+        <div v-if="!showInfo" @mouseenter="getCredits">
             <img :src="'https://image.tmdb.org/t/p/w342' + imgFrontPath" :alt="originalTitle + 'immagine'">
         </div>
         <!-- parte dietro -->
@@ -9,11 +9,14 @@
             <div>{{title}}</div>
             <div>{{originalTitle}}</div>
             <div>{{originalLinguage}}</div>
+            <!-- stelle -->
             <span v-for="n in 5">
                 <i v-if="n <= stars" class="fa-solid fa-star fa-xs"></i>
                 <i v-else class="fa-regular fa-star fa-xs"></i>
             </span>
+            <!-- bandiere -->
             <img class="flag" :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
+            <!-- cast -->
             <div v-for="actor in cast" :key="actor.id">{{ actor.name }}</div>
         </div>
 
@@ -43,12 +46,21 @@ import {store} from '../data/store.js';
             }
         },
         methods:{
+
+            /**
+             * [getCredits]
+             * richiamando l'api riepie un array (cast) con i primi 5 attori del cast e li invia al componente padre, [lavora con addCredits]
+             * @return {Void}
+             */
             getCredits(){
+                //per girare la card
                 this.showInfo = true;
+                //se cast esiste non richiamare l'api
                 if(this.cast && this.cast.length > 0){
                     console.log('cast vuoto');
                     return;
                 }
+                //richiama l'api riempie con i primi 5 l'array cast
                 const endPoint = this.store.endPoint.movieCast + this.id + '/credits';
                 const params = {
                     api_key : this.store.api_key
@@ -63,6 +75,7 @@ import {store} from '../data/store.js';
                 }).catch((error)=>{
                     console.log(error);
                 }).finally(()=>{
+                    //invia cast al componente padre (ad App)
                     this.$emit('castReady', cast);
                 })
             },

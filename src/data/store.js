@@ -5,7 +5,8 @@ export const store = reactive({
     endPoint:{
         movies:'search/movie',
         series:'search/tv',
-        movieCast: 'movie/'
+        movieCast: 'movie/',
+        genre: 'genre/movie',
     },
     api_key: '9aa133434562a109367588268257ad2f',
     query:'',

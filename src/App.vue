@@ -4,6 +4,7 @@
     <header>
       <div class="container py-3 px-1 d-flex justify-content-between align-items-center">
         <h1>BOOLFLIX</h1>
+
         <SearchComponent 
         @filter-movies-films="setParams"
         />
@@ -21,26 +22,28 @@
       </div>
       <!-- cards per i film -->
       <div class="container row mx-auto gy-2 mb-5 pb-5">
-        <div class="col-2" v-for="movies in this.store.moviesList" :key="movies.id">
+        <div class="col-3" v-for="movie in this.store.moviesList" :key="movie.id">
           <CardComponent
-            :title="movies.title"
-            :originalTitle="movies.original_title"
-            :originalLinguage="movies.original_language"
-            :voteAverage="movies.vote_average"
-            :imgFrontPath="movies.poster_path"
-            :id="movies.id"
-            :cast="movies.cast"
-            @cast-ready="addCredits($event,movies)"
+            :title="movie.title"
+            :originalTitle="movie.original_title"
+            :originalLinguage="movie.original_language"
+            :voteAverage="movie.vote_average"
+            :imgFrontPath="movie.poster_path"
+            :id="movie.id"
+            :cast="movie.cast"
+            @cast-ready="addCredits($event,movie)"
           />
         </div>
         <!-- cards per le serie -->
-        <div class="col-2" v-for="series in this.store.seriesList" :key="series.id">
+        <div class="col-3" v-for="serie in this.store.seriesList" :key="serie.id">
           <CardComponent
-            :title="series.name"
-            :originalTitle="series.original_name"
-            :originalLinguage="series.original_language"
-            :voteAverage="series.vote_average"
-            :img-front-path="series.poster_path"
+            :title="serie.name"
+            :originalTitle="serie.original_name"
+            :originalLinguage="serie.original_language"
+            :voteAverage="serie.vote_average"
+            :img-front-path="serie.poster_path"
+            :cast="serie.cast"
+            @cast-ready="addCredits($event,seris)"
           />
         </div>
       </div>
@@ -73,9 +76,16 @@
 
     methods:{
 
+      /**
+       * [addCredits]
+       * preso il cast da (CardSection) lo inserisce nei movies, [lavora con getCredits]
+       * @param {Array} cast 
+       * @param {Object} movies 
+       * @return {Void}
+       */
       addCredits(cast,movies){
         console.log(cast);
-        movies.cast = cast
+        movies.cast = cast;
         console.log(movies);
       },
 
