@@ -22,6 +22,7 @@
             :originalTitle="movies.original_title"
             :originalLinguage="movies.original_language"
             :voteAverage="movies.vote_average"
+            :imgFrontPath="movies.poster_path"
           />
         </div>
         <!-- cards per le serie -->
@@ -31,6 +32,7 @@
             :originalTitle="series.original_name"
             :originalLinguage="series.original_language"
             :voteAverage="series.vote_average"
+            :img-front-path="series.poster_path"
           />
         </div>
       </div>

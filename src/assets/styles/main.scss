@@ -27,9 +27,18 @@ img{
 }
 .my-card{
     background-color: $colorRed;
-    height: 100%;
+    height: 350px;
     img{
+        object-fit: cover;
+        height: 350px;
+        width: 100%;
+    }
+    .flag{
         width: 30px;
+        height: auto;
+    }
+    i{
+        color:#c6d408;
     }
 }
 

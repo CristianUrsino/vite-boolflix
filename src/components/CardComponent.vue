@@ -1,10 +1,21 @@
 <template>
-    <div class="my-card debug">
-        <h4>{{title}}</h4>
-        <h4>{{originalTitle}}</h4>
-        <h4>{{originalLinguage}}</h4>
-        <h4>{{voteAverage}}</h4>
-        <img :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
+    <div class="my-card debug" @mouseover="showInfo = true" @mouseout="showInfo = false">
+
+        <div v-if="!showInfo">
+            <img :src="'https://image.tmdb.org/t/p/w342' + imgFrontPath" :alt="originalTitle + 'immagine'">
+        </div>
+
+        <div v-else >
+            <div>{{title}}</div>
+            <div>{{originalTitle}}</div>
+            <div>{{originalLinguage}}</div>
+            <span v-for="n in 5">
+                <i v-if="n <= stars" class="fa-solid fa-star fa-xs"></i>
+                <i v-else class="fa-regular fa-star fa-xs"></i>
+            </span>
+            <img class="flag" :src="currentFlagCalc" :alt="'bandiera' + originalLinguage">
+        </div>
+
     </div>
     
 </template>
@@ -17,11 +28,15 @@
             originalTitle:String,
             originalLinguage:String,
             voteAverage:Number,
+            imgFrontPath:String,
         },
         data(){
             return{
                 currentFlag:'',
+                showInfo:false,
             }
+        },
+        methods:{
         },
         computed:{
             /**
@@ -47,8 +62,19 @@
                     initials = 'GB';
                 }
                 return 'https://flagsapi.com/' + initials + '/shiny/32.png';
+            },
+            /**
+             * [stars]
+             * calcola e restituisce la quantità di stelle in base al voto
+             * @return {Number} numero da 1 a 5
+             * ??forse aggiungere mezza stella??
+             */
+            stars(){
+                let stars = Math.ceil(this.voteAverage / 2);
+                console.log(stars);
+                return stars
             }
-        }
+        },
     }
 </script>
 
