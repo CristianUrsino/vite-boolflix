@@ -135,7 +135,7 @@
         }
         axios.get(tredingUrl, {params}).then((res)=>{
           this.store.tredingList = res.data.results;
-          this.store.currentMustTreding = this.store.tredingList[0]
+          this.store.currentMustTreding = this.store.tredingList[1]
           console.log(this.store.tredingList);
         }).catch((error)=>{
           console.log(error);
@@ -158,9 +158,9 @@
        * @return {Void}
        */
       addCredits(cast,serieMovie){
-        console.log(cast);
+        // console.log(cast);
         serieMovie.cast = cast;
-        console.log(serieMovie);
+        // console.log(serieMovie);
       },
 
       /**

@@ -212,7 +212,8 @@ main{
     background: $heroGradient;
     transform: rotate(180deg);
 }
-
+.my-carousel{
+}
 // RESPONSIVE
 @media screen and (max-width:576px) {
     header{

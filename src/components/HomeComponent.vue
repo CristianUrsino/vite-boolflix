@@ -67,12 +67,19 @@
         </div>
     </div>
 
+    <h4 class="pt-4 container">FILM E SERIE TV PIU' POPOLARI: </h4>
+    <CarouselComponent/>
+    
 </template>
 
 <script>
 import {store} from '../data/store';
+import CarouselComponent from './main/CarouselComponent.vue';
 export default{
     name: 'HomeComponent',
+    components:{
+        CarouselComponent,
+    },
     data(){
         return{
             store,
@@ -83,7 +90,7 @@ export default{
         ToggleShowMoreInfo(){
             this.showMoreInfo= !this.showMoreInfo;
         }
-    }
+    },
 }
 </script>
 
