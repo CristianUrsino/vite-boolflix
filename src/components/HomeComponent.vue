@@ -67,24 +67,6 @@
         </div>
     </div>
 
-    <h4 class="pt-4 container">FILM E SERIE TV PIU' POPOLARI: </h4>
-    <CarouselComponent
-    :list="store.tredingList"
-    carousel-number="first"
-    />
-    
-    <h4 class="pt-4 container">FILM E SERIE TV PIU' POPOLARI: </h4>
-    <CarouselComponent
-    :list="store.upcomingMovieList"
-    :carousel-number="'second'"
-    />
-
-    <h4 class="pt-4 container">SERIE TV PIU' VOTATE: </h4>
-    <CarouselComponent
-    :list="store.topRatedSerieList"
-    :carousel-number="'third'"
-    />
-    
 </template>
 
 <script>
