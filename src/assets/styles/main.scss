@@ -31,9 +31,11 @@ select{
 button{
     border: none;
 }
-
 i.fa-star{
     color:#c6d408;
+}
+.bold{
+    font-weight: bold;
 }
 //UTILITYS
 .debug{
@@ -43,13 +45,46 @@ i.fa-star{
     color: $colorBlack;
 }
 .my-card{
-    background-color: $colorRed;
+    // background-color: $colorBlack;
     height: 450px;
-    .front-img{
-        object-fit: cover;
-        height: 450px;
-        width: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+    margin: 20px auto ;
+
+    position: relative;
+    box-shadow: none;
+    >*{
+        transition: all 0.8s ease;
+        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
+
+    .front-side{
+        img{
+            object-fit: cover;
+            height: 450px;
+            width: 100%;
+        }
+    }
+    .back-side{
+        width: 100%;
+        padding: 20px;
+        height: 100%;
+        overflow-y: auto;
+        background-color: $colorRed;
+    
+        transform: rotateY(-180deg);
+    }
+
+    
+}
+.my-card:hover .front-side{
+    transform: rotateY(180deg);
+}
+.my-card:hover .back-side{
+    transform: rotateY(0deg);
 }
 .flag{
     width: 30px;

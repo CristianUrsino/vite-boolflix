@@ -1,13 +1,12 @@
 <template>
-    <div class="my-card " @mouseleave="showInfo = false" >
+    <div class="my-card" >
         <!-- parte avanti -->
-        <div v-if="!showInfo" @mouseenter="getCredits">
+        <div @mouseenter="getCredits" class="front-side">
             <img class="front-img" :src="'https://image.tmdb.org/t/p/w342' + imgFrontPath" :alt="originalTitle + 'immagine'">
         </div>
         <!-- parte dietro -->
-        <div v-else >
-            <div>{{title}}</div>
-            <div>{{originalTitle}}</div>
+        <div class="back-side">
+            <div><span class="bold">TITLE</span>{{title}}</div>
             <!-- stelle -->
             <span v-for="n in 5">
                 <i v-if="n <= store.stars_calc(voteAverage)" class="fa-solid fa-star fa-xs"></i>
@@ -16,6 +15,7 @@
             <!-- bandiere -->
             <img class="flag" :src="store.currentFlagCalc(originalLinguage)" :alt="'bandiera' + originalLinguage">
             <!-- cast -->
+            <div class="bold">CAST:</div>
             <div v-for="actor in cast" :key="actor.id">{{ actor.name }}</div>
             
         </div>

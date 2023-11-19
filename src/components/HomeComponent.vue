@@ -13,7 +13,7 @@
                   <div class="horizontal-border"></div>
                 </h1>
               </div>
-              <p class="mt-3 p-3 rounded-5" v-if="showMoreInfo">{{store.currentMustTreding.overview}}</p>
+              <p class="mt-3 p-3 rounded-5" v-if="!showMoreInfo">{{store.currentMustTreding.overview}}</p>
               <p class="mt-3 p-3 rounded-5" v-else>
                 original title: {{store.currentMustTreding.original_title}} <br>
                 original language: {{store.currentMustTreding.original_language}} <br>
