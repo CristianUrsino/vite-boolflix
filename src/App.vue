@@ -1,20 +1,20 @@
 <template>
   <!-- ENTER PAGE -->
   <div v-if="showEnterPage" class="wrapper enter-page ">
-    <figure class="img-title"><img src="./assets/images/Netflix_2015_logo.svg.png" alt="logo netflix" ></figure>
+    <figure class="img-title"><img src="./assets/images/Netflix_2015_logo.png" alt="logo netflix" ></figure>
     <button class="d-block mx-auto btn border px-5 py-2 my-btn" @click="enterInPage">ENTRA</button>
   </div>
-
+  <!-- loading page -->
   <div class="wrapper loading-page" v-else-if="showLoadingPage">
     <div class="loading-icon"><i class="inline-block fa-solid fa-spinner fa-spin-pulse"></i></div>
   </div>
 
-  <!-- PAGE -->
+  <!-- HOME -->
   <div class="wrapper" v-else>
 
     <header>
       <div class="container py-3 px-1 d-flex justify-content-between align-items-center">
-        <h1>BOOLFLIX</h1>
+        <h1 @click="toHome">BOOLFLIX</h1>
         <GenreSelect/>
         <SearchComponent 
         @filter-movies-films="setParams"
@@ -22,11 +22,11 @@
       </div>
     </header>
 
-    <main class="container-fluid overflow-y-auto py-3 px-1">
-      <!-- prima di cercare -->
-      <div class="container">
-        <h3 v-if="store.moviesList.length === 0 && store.seriesList.length === 0">Cercare i film/serie tv</h3>
-      </div>
+    <main class="container-fluid p-0 overflow-y-auto">
+
+      <!-- main prima di cercare -->
+      <HomeComponent v-if="store.moviesList.length === 0 && store.seriesList.length === 0"/>
+      
       <!-- messaggio di errore -->
       <div class="container">
         <div v-if="store.error != ''" class="alert alert-danger">{{store.error}}</div>
@@ -74,6 +74,7 @@
   import SearchComponent from './components/SearchComponent.vue';
   import CardComponent from './components/CardComponent.vue';
   import GenreSelect from './components/GenreSelect.vue';
+  import HomeComponent from './components/HomeComponent.vue';
 
   export default{
     name: 'App',
@@ -81,6 +82,7 @@
       SearchComponent,
       CardComponent,
       GenreSelect,
+      HomeComponent,
     },
 
     data(){
@@ -95,30 +97,57 @@
     },
 
     methods:{
-
+      /**
+       * [enterInPage]
+       * esegue lo switch tra la enter page e la loading page, e richiama le API utilizzate a caricamento della home
+       * @returns {Void}
+       */
       enterInPage(){
         this.showEnterPage= false;
         this.showLoadingPage= true;
         this.getGenre();
+        this.getTreding();
       },
 
       /**
        * [getGenre]
-       * 
+       * riempie l'array (genreList [in store]) e fa entrare nella home
+       * @returns {Void}
        */
-       getGenre(){
+      getGenre(){
         const genreApi = this.store.apiUrl + this.store.endPoint.genre;
         const params = {
           api_key:this.store.api_key,
         }
         axios.get(genreApi, {params}).then((res)=>{
           this.store.genreList = res.data.genres;
-          console.log(this.store.genreList);
+          // console.log(this.store.genreList);
+        }).catch((error)=>{
+          console.log(error);
+        }).finally(()=>{
+        })
+      },
+
+      getTreding(){
+        const tredingUrl = this.store.apiUrl + this.store.endPoint.treding;
+        const params={
+          api_key:this.store.api_key,
+        }
+        axios.get(tredingUrl, {params}).then((res)=>{
+          this.store.tredingList = res.data.results;
+          this.store.currentMustTreding = this.store.tredingList[1]
+          console.log(this.store.tredingList);
         }).catch((error)=>{
           console.log(error);
         }).finally(()=>{
           this.showLoadingPage = false;
         })
+      },
+
+      toHome(){
+        this.store.moviesList = [];
+        this.store.seriesList = [];
+        this.store.error = '';
       },
 
       /**
@@ -206,12 +235,12 @@
       
     },
     created(){
-      this.showImgTitle=true;
     }
   }
 </script>
 
 <style lang="scss" scoped>
+// animazione di comparsa
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -220,7 +249,7 @@
     opacity: 1;
   }
 }
-
+//elementi con animazione di comparsa
 .enter-page{
   .img-title {
     animation: fadeIn 2s linear;
@@ -232,4 +261,6 @@
 .loading-page{
   animation: fadeIn 1s linear;
 }
+
+
 </style>
