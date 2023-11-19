@@ -9,6 +9,8 @@ export const store = reactive({
         tvCast:'tv/',
         genre: 'genre/tv/list',
         treding: '/trending/all/day',
+        upcomingMovie: 'movie/upcoming',
+        topRatedSerie: 'tv/top_rated',
     },
     api_key: '9aa133434562a109367588268257ad2f',
     query:'',
@@ -20,6 +22,8 @@ export const store = reactive({
     currentGenreId:'',
     tredingList:[],
     currentMustTreding:{},
+    upcomingMovieList:[],
+    topRatedSerieList:[],
     stars_calc: (voteAverage)=>Math.ceil(voteAverage / 2),
     /**
              * [currentFlagCalcl]

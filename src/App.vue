@@ -93,10 +93,23 @@
         showEnterPage:true,
         showImgTitle:false,
         showLoadingPage:false,
+        apiStartNumber: 3,
       }
     },
 
     methods:{
+      /**
+       * [updateApiStartNumbe]
+       * diminuisce il numero di Api nello start non caricate (apiStartNumber) fino a quando non può togliere la visualizzazione di loading page
+       * @returns {Void}
+       */
+      updateApiStartNumber(){
+        this.apiStartNumber--;
+        if(this.apiStartNumber === 0){
+          this.showLoadingPage = false;
+        }
+      },
+
       /**
        * [enterInPage]
        * esegue lo switch tra la enter page e la loading page, e richiama le API utilizzate a caricamento della home
@@ -107,11 +120,13 @@
         this.showLoadingPage= true;
         this.getGenre();
         this.getTreding();
+        this.getUpcomingMovies();
+        this.getTopRatedSeries()
       },
 
       /**
        * [getGenre]
-       * riempie l'array (genreList [in store]) e fa entrare nella home
+       * riempie l'array (genreList [in store])
        * @returns {Void}
        */
       getGenre(){
@@ -125,9 +140,15 @@
         }).catch((error)=>{
           console.log(error);
         }).finally(()=>{
+          this.updateApiStartNumber();
         })
       },
 
+      /**
+       * [getTreding]
+       * riempie l'array (tredingList [in store]) e setta l'opera da visualizzare nell'hero
+       * @returns {Void}
+       */
       getTreding(){
         const tredingUrl = this.store.apiUrl + this.store.endPoint.treding;
         const params={
@@ -135,8 +156,49 @@
         }
         axios.get(tredingUrl, {params}).then((res)=>{
           this.store.tredingList = res.data.results;
-          this.store.currentMustTreding = this.store.tredingList[0]
+          this.store.currentMustTreding = this.store.tredingList[1]
           console.log(this.store.tredingList);
+        }).catch((error)=>{
+          console.log(error);
+        }).finally(()=>{
+          this.updateApiStartNumber();
+
+        })
+      },
+
+      /**
+       * [getUpcomingMovie]
+       * riempie l'array (upcomingMovieList [in store])
+       * @returns {Void}
+       */
+      getUpcomingMovies(){
+        const UpcomingMovieUrl= this.store.apiUrl + this.store.endPoint.upcomingMovie;
+        const params={
+          api_key:this.store.api_key,
+        }
+        axios.get(UpcomingMovieUrl, {params}).then((res)=>{
+          this.store.upcomingMovieList = res.data.results;
+          console.log(res.data.results);
+        }).catch((error)=>{
+          console.log(error);
+        }).finally(()=>{
+          this.updateApiStartNumber();
+        })
+      },
+
+      /**
+       * [getTopRatedSeries]
+       * riempie l'array (topRatedSerieList [in store])
+       * @returns {Void}
+       */
+      getTopRatedSeries(){
+        const topRatedSerieUrl= this.store.apiUrl + this.store.endPoint.topRatedSerie;
+        const params={
+          api_key:this.store.api_key,
+        }
+        axios.get(topRatedSerieUrl, {params}).then((res)=>{
+          this.store.topRatedSerieList = res.data.results;
+          console.log(this.store.topRatedSerieList);
         }).catch((error)=>{
           console.log(error);
         }).finally(()=>{
@@ -144,6 +206,11 @@
         })
       },
 
+      /**
+       * [toHome]
+       * reset dei valori fondamenteli
+       * @return {Void}
+       */
       toHome(){
         this.store.moviesList = [];
         this.store.seriesList = [];
@@ -158,9 +225,9 @@
        * @return {Void}
        */
       addCredits(cast,serieMovie){
-        console.log(cast);
+        // console.log(cast);
         serieMovie.cast = cast;
-        console.log(serieMovie);
+        // console.log(serieMovie);
       },
 
       /**

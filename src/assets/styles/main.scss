@@ -139,6 +139,7 @@ main{
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
+    overflow: hidden;
     .hero-content{
         position: absolute;
         top: 50%;
@@ -212,7 +213,8 @@ main{
     background: $heroGradient;
     transform: rotate(180deg);
 }
-
+.my-carousel{
+}
 // RESPONSIVE
 @media screen and (max-width:576px) {
     header{

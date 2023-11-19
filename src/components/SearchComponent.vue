@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input class="text-black rounded me-3" type="text" placeholder="scrivi qui" v-model="newQuery">
+        <input class="text-black rounded me-3" type="text" placeholder="scrivi qui" v-model="newQuery" @keyup.enter="passNewQuery">
         <button class="text-black rounded px-2" @click="passNewQuery">INVIA</button>
     </div>
   </template>
