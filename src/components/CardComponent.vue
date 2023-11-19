@@ -17,9 +17,7 @@
             <!-- cast -->
             <div class="bold">CAST:</div>
             <div v-for="actor in cast" :key="actor.id">{{ actor.name }}</div>
-            
         </div>
-
     </div>
     
 </template>

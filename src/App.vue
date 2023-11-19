@@ -13,8 +13,8 @@
   <div class="wrapper" v-else>
 
     <header>
-      <div class="container py-3 px-1 d-flex justify-content-between align-items-center">
-        <h1 @click="toHome">BOOLFLIX</h1>
+      <div class="container-md py-3 px-1 d-flex justify-content-between align-items-center wrap">
+        <h1 @click="toHome" >BOOLFLIX</h1>
         <GenreSelect/>
         <SearchComponent 
         @filter-movies-films="setParams"
@@ -32,8 +32,8 @@
         <div v-if="store.error != ''" class="alert alert-danger">{{store.error}}</div>
       </div>
       <!-- cards per i film -->
-      <div class="container row mx-auto gy-2 mb-5 pb-5">
-        <div class="col-3" v-for="movie in this.store.moviesList" :key="movie.id" v-show="movie.genre_ids.includes(store.currentGenreId) || store.currentGenreId === ''">
+      <div class=" row mx-auto gy-2 mb-5 pb-5 ">
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl-2" v-for="movie in this.store.moviesList" :key="movie.id" v-show="movie.genre_ids.includes(store.currentGenreId) || store.currentGenreId === ''">
             <CardComponent
             :isFilm="true"
             :title="movie.title"
@@ -47,7 +47,7 @@
             />
         </div>
         <!-- cards per le serie -->
-        <div class="col-3" v-for="serie in this.store.seriesList" :key="serie.id" v-show="serie.genre_ids.includes(store.currentGenreId) || store.currentGenreId === ''">
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl-2" v-for="serie in this.store.seriesList" :key="serie.id" v-show="serie.genre_ids.includes(store.currentGenreId) || store.currentGenreId === ''">
             <CardComponent
               :isFilm="false"
               :title="serie.name"
@@ -135,7 +135,7 @@
         }
         axios.get(tredingUrl, {params}).then((res)=>{
           this.store.tredingList = res.data.results;
-          this.store.currentMustTreding = this.store.tredingList[1]
+          this.store.currentMustTreding = this.store.tredingList[0]
           console.log(this.store.tredingList);
         }).catch((error)=>{
           console.log(error);

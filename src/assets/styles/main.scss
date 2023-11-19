@@ -62,6 +62,7 @@ i.fa-star{
     }
 
     .front-side{
+        width: 100%;
         img{
             object-fit: cover;
             height: 450px;
@@ -78,7 +79,6 @@ i.fa-star{
         transform: rotateY(-180deg);
     }
 
-    
 }
 .my-card:hover .front-side{
     transform: rotateY(180deg);
@@ -121,7 +121,7 @@ i.fa-star{
 }
 header{
     height: 90px;
-    background-color: $colorBlack;
+    background: $headerGradient;
     h1{
         color: $colorRed;
         cursor: pointer;
@@ -145,6 +145,7 @@ main{
         left: 100px;
         transform: translate(0,-50%);
         width: 30%;
+        min-width: 400px;
         .logo{
             width: 20px;
         }
@@ -200,4 +201,29 @@ main{
     bottom: 0;
     right: 0;
     background: $heroGradient
+}
+.hero:before {
+    content: "";
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    top: -1px;
+    right: 0;
+    background: $heroGradient;
+    transform: rotate(180deg);
+}
+
+// RESPONSIVE
+@media screen and (max-width:576px) {
+    header{
+        h1{
+            font-size: 1.5em;
+        }
+        input,select{
+            width: 100px;
+        }
+    }
+    .hero .hero-content{
+        left: 0;
+    }
 }
