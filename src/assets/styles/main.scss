@@ -15,6 +15,9 @@ $fa-font-path: '../webfonts';
     list-style-type: none;
     color: white;
 }
+body{
+    background-color: $colorPrimary;
+}
 img{
     width: 100%;
 }
@@ -47,11 +50,33 @@ select{
         color:#c6d408;
     }
 }
-
+.my-btn{
+    background-color: $colorRed;
+    color: white;
+}
 //STRUCTURE
 .wrapper{
     height: 100vh;
     overflow: hidden;
+}
+.enter-page,
+.loading-page{
+    background: $gradient;
+}
+.loading-icon{
+    font-size: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    i{
+        color: $colorRed;
+    }
+}
+.img-title{
+    width: 60%;
+    margin: 50vh auto 0;
+    transform: translate(0,-50%);
 }
 header{
     background-color: $colorBlack;

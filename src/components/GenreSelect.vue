@@ -1,5 +1,5 @@
 <template>
-    <select class="rounded" v-model="currentGenre" @change.value="updateCurrentGenre">
+    <select class="rounded" v-model="currentGenre" @change.value="setCurrentGenre">
         <option value="" selected>Scegli il genere</option>
         <option v-for="genre in store.genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
     </select>
@@ -16,7 +16,7 @@ export default{
         }
     },
     methods:{
-        updateCurrentGenre(){
+        setCurrentGenre(){
             this.store.currentGenreId= this.currentGenre;
             console.log(this.store.currentGenreId);
         },

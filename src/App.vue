@@ -1,5 +1,16 @@
 <template>
-  <div class="wrapper">
+  <!-- ENTER PAGE -->
+  <div v-if="showEnterPage" class="wrapper enter-page ">
+    <figure class="img-title"><img src="./assets/images/Netflix_2015_logo.svg.png" alt="logo netflix" ></figure>
+    <button class="d-block mx-auto btn border px-5 py-2 my-btn" @click="enterInPage">ENTRA</button>
+  </div>
+
+  <div class="wrapper loading-page" v-else-if="showLoadingPage">
+    <div class="loading-icon"><i class="inline-block fa-solid fa-spinner fa-spin-pulse"></i></div>
+  </div>
+
+  <!-- PAGE -->
+  <div class="wrapper" v-else>
 
     <header>
       <div class="container py-3 px-1 d-flex justify-content-between align-items-center">
@@ -77,10 +88,38 @@
         store,
         paramsMovies:{},
         paramsSeries:{},
+        showEnterPage:true,
+        showImgTitle:false,
+        showLoadingPage:false,
       }
     },
 
     methods:{
+
+      enterInPage(){
+        this.showEnterPage= false;
+        this.showLoadingPage= true;
+        this.getGenre();
+      },
+
+      /**
+       * [getGenre]
+       * 
+       */
+       getGenre(){
+        const genreApi = this.store.apiUrl + this.store.endPoint.genre;
+        const params = {
+          api_key:this.store.api_key,
+        }
+        axios.get(genreApi, {params}).then((res)=>{
+          this.store.genreList = res.data.genres;
+          console.log(this.store.genreList);
+        }).catch((error)=>{
+          console.log(error);
+        }).finally(()=>{
+          this.showLoadingPage = false;
+        })
+      },
 
       /**
        * [addCredits]
@@ -165,24 +204,32 @@
         });
       },
       
-      getGenre(){
-        const genreApi = this.store.apiUrl + this.store.endPoint.genre;
-        const params = {
-          api_key:this.store.api_key,
-        }
-        axios.get(genreApi, {params}).then((res)=>{
-          this.store.genreList = res.data.genres;
-          console.log(this.store.genreList);
-        })
-      },
-
     },
     created(){
-      this.getGenre();
+      this.showImgTitle=true;
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.enter-page{
+  .img-title {
+    animation: fadeIn 2s linear;
+  }
+  .my-btn{
+    animation: fadeIn 4s ease-in;
+  }
+} 
+.loading-page{
+  animation: fadeIn 1s linear;
+}
 </style>
